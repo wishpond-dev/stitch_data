@@ -1,7 +1,6 @@
 module StitchData
   class Api
     attr_accessor :upsert_fields, :insert_bulk_size, :data
-    attr_reader :api_base_url
     API_BASE_URL = "https://api.stitchdata.com/v2/import".freeze
 
     def initialize(upsert_fields, data)
