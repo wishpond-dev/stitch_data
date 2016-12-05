@@ -24,7 +24,7 @@ require 'stitch_data'
 ### Configuration
 You can use an initializer for example if you're on Rails.
 ```rb
-# initializers/noun_project_api.rb
+# initializers/stitch_data_api.rb
 StitchData.configure do |config|
   config.token = {your api token}
   config.client_id = { your client id }
