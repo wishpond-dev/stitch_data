@@ -25,7 +25,7 @@ StitchData.configure do |config|
 end
 ```
 ### Usage
-We reccomend to check the StitchData import api first.
+We reccomend to check the StitchData import api first. <br/>
 https://docs.stitchdata.com/hc/en-us/articles/223734167-Import-API-Methods
 Each request to Stitch must include the following keys
 ```rb
