@@ -31,8 +31,8 @@ StitchData.configure do |config|
 end
 ```
 ### Usage
-We reccomend to read the Stitch import api documetation in ordre to understand how to utilize the upsert method for your data replication needs. <br/>
-https://docs.stitchdata.com/hc/en-us/articles/223734167-Import-API-Methods <br/>
+We reccomend to read the [Stitch import api documetation](https://docs.stitchdata.com/hc/en-us/articles/223734167-Import-API-Methods ) in order to understand how to utilize the upsert method for your data replication needs. <br/>
+<br/>
 Each upsert request to Stitch must include the following keys
 ```rb
 stitch_upsert_keys = { sequence: :created_at, table_name: :some_table_name, key_names: [:id] }
@@ -61,4 +61,4 @@ This is completely unofficial and is not related to StitchData company in any wa
 5. Create new Pull Request
 
 ## About Tailor Brands
-[Check us out!](https://www.tailorbrands.com)
+[Check us out!](https://goo.gl/h26ZwU)
