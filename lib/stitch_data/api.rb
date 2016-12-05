@@ -38,7 +38,7 @@ module StitchData
 
     def validate_required_upsert_fields(upsert_fields)
       raise StitchData::Errors::WrongOrMissingUpsertFields, "Missing required upsert fields" if upsert_fields.keys.sort != [:sequence , :table_name , :key_names].sort
-      raise  StitchData::Errors::WrongOrMissingUpsertFields, "upsert field key_name should be of type Array" if upsert_fields[:key_names].class.name != "Array"
+      raise StitchData::Errors::WrongOrMissingUpsertFields, "upsert field key_name should be of type Array" if upsert_fields[:key_names].class.name != "Array"
       upsert_fields
     end
 
