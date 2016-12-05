@@ -4,7 +4,7 @@ module StitchData
     API_BASE_URL = "https://api.stitchdata.com/v2/import".freeze
 
     def initialize(upsert_fields, data)
-      validate_required_upsert_fields
+      validate_required_upsert_fields(upsert_fields)
       @request_params = { Authorization: "Bearer #{StitchData.configuration.token}", content_type: 'application/json', accept: 'json' }
       @upsert_fields = upsert_fields
       @data = build_data(data)
