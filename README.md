@@ -11,9 +11,9 @@ gem "stitch_data", "~> 1.0.0"
 ```
 
 ### Prerequisite
-Create StitchData Account
-Connect your account to your favorite data stores ( Redshift, BigQuery, PostgreSQL )
-Create an import API integration in the Stitch Console and generate your API token.
+- Create StitchData Account /n
+- Connect your account to your favorite data stores ( Redshift, BigQuery, PostgreSQL ) <br/>
+- Create an import API integration in the Stitch Console and generate your API token. <br/>
 
 ### Configuration
 You can use an initializer for example if you're on Rails.
