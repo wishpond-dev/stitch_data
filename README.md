@@ -6,7 +6,7 @@ Stitch Data is an ETL service built for developers, it supports many built in th
 In case you need to integrate a data source which is not supported by Stitch you can use the API that utilizes their data replication engine.
 
 ### Prerequisite
-- Create StitchData Account <br/>
+- Create Stitch Data Account <br/>
 - Connect the account to your favorite data stores ( Redshift, BigQuery, PostgreSQL ) <br/>
 - Create an import API integration in the Stitch Console and generate your API token.
 
@@ -50,7 +50,7 @@ StitchData::Api.new(stitch_upsert_keys, data).validate!
 
 ## Disclaimer
 
-This is completely unofficial and is not related to StitchData company in any way.
+This is completely unofficial and is not related to Stitch Data company in any way.
 
 ## Contributing
 
