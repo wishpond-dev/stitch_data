@@ -43,7 +43,7 @@ StitchData::Api.new(stitch_upsert_keys, data).upsert!
 ```
 
 ###Integration Testing
-Use the validate! method in order to check if Stitch accepts the data your data.
+Use the validate! method in order to validate your upsert requests goes through
 ```rb
 StitchData::Api.new(stitch_upsert_keys, data).validate!
 ```
