@@ -7,7 +7,7 @@ module StitchData
       validate_required_upsert_fields(upsert_fields)
       @request_params = { Authorization: "Bearer #{StitchData.configuration.token}", content_type: 'application/json', accept: 'json' }
       @upsert_fields = upsert_fields
-      @data = build_data(data)
+      @data = build_records(data)
     end
 
     def self.check_endpoint_status
@@ -23,8 +23,8 @@ module StitchData
     end
 
     private
-    def build_data(data)
-      data.map do |record|
+    def build_records(records)
+      records.map do |record|
         {
           client_id: StitchData.configuration.client_id,
           table_name: upsert_fields[:table_name].to_s,
