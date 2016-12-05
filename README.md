@@ -26,8 +26,8 @@ You can use an initializer for example if you're on Rails.
 ```rb
 # initializers/stitch_data_api.rb
 StitchData.configure do |config|
-  config.token = {your api token}
-  config.client_id = { your client id }
+  config.token = "your-api-token"
+  config.client_id = "your-client-id"
 end
 ```
 ### Usage
