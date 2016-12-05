@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.date        = Date.today.to_s
   s.summary     = "Ruby wraper for the Stitch Data Api"
-  s.description = "wraper for the upsert method used for import data into stitch"
+  s.description = "Wraper for the upsert method used for import data into stitch"
   s.authors     = ['Omri Shuva']
   s.email       = 'omri@tailorbrands.com'
   s.homepage    = 'https://github.com/TailorBrands/stitch_data'
