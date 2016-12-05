@@ -12,12 +12,12 @@ RSpec.describe 'StitchData' do
   describe :initalize do
 
     it 'should raise error unless required upsert fields where given' do
-      expect { StitchData::Api.new({},@data) }.to raise_error(WrongOrMissingUpsertFields)
+      expect { StitchData::Api.new({},@data) }.to raise_error(StitchData::Errors::WrongOrMissingUpsertFields)
     end
 
     it 'should validate upsert field key_name is of Array data type' do
        @upsert_fields[:key_names] = :id
-       expect { StitchData::Api.new(@upsert_fields,@data) }.to raise_error(WrongOrMissingUpsertFields)
+       expect { StitchData::Api.new(@upsert_fields,@data) }.to raise_error(StitchData::Errors::WrongOrMissingUpsertFields)
     end
 
     it 'should build valid data structue' do
@@ -45,18 +45,18 @@ RSpec.describe 'StitchData' do
     end
   end
 
-  context :api_methods do
+  # context :api_methods do
 
-    before :each do
-      @shared_example_data = { upsert_fields: @upsert_fields, data: @data, method: 'validate!' }
-    end
+  #   before :each do
+  #     @shared_example_data = { upsert_fields: @upsert_fields, data: @data, method: 'validate!' }
+  #   end
 
-    describe :upsert! do
-      it_behaves_like('endpoint_validation', @shared_example_data)
-    end
+  #   describe :upsert! do
+  #     it_behaves_like('endpoint_validation', @shared_example_data)
+  #   end
 
-    describe :validate! do
-      it_behaves_like('endpoint_validation', @shared_example_data)
-    end
-  end
+  #   describe :validate! do
+  #     it_behaves_like('endpoint_validation', @shared_example_data)
+  #   end
+  # end
 end

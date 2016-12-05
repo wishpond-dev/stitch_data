@@ -14,12 +14,10 @@ module StitchData
     end
 
     def upsert!
-      validate_endpoint_status!
       RestClient.post(upsert_url, @data.to_json, @request_params)
     end
 
     def validate!
-      validate_endpoint_status!
       RestClient.post(validate_url, @data.to_json, @request_params)
     end
 
@@ -37,10 +35,6 @@ module StitchData
       end
     end
 
-    def validate_endpoint_status!
-      raise EndPointUnavailable, "StitchData endpoint is currently unavailable" unless self.class.check_endpoint_status == "OK"
-    end
-
     def upsert_url
       "#{API_BASE_URL}/push"
     end
@@ -50,16 +44,10 @@ module StitchData
     end
 
     def validate_required_upsert_fields(upsert_fields)
-      raise WrongOrMissingUpsertFields, "Missing required upsert fields" if upsert_fields.keys.sort != [:sequence , :table_name , :key_names].sort
-      raise  WrongOrMissingUpsertFields, "upsert field key_name should be of type Array" if upsert_fields[:key_names].class.name != "Array"
+      raise StitchData::Errors::WrongOrMissingUpsertFields, "Missing required upsert fields" if upsert_fields.keys.sort != [:sequence , :table_name , :key_names].sort
+      raise  StitchData::Errors::WrongOrMissingUpsertFields, "upsert field key_name should be of type Array" if upsert_fields[:key_names].class.name != "Array"
       upsert_fields
     end
 
   end
-end
-
-class EndPointUnavailable < StandardError
-end
-
-class WrongOrMissingUpsertFields < StandardError
 end
