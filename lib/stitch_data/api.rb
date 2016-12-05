@@ -4,8 +4,9 @@ module StitchData
     API_BASE_URL = "https://api.stitchdata.com/v2/import".freeze
 
     def initialize(upsert_fields, data)
+      validate_required_upsert_fields
       @request_params = { Authorization: "Bearer #{StitchData.configuration.token}", content_type: 'application/json', accept: 'json' }
-      @upsert_fields = validate_required_upsert_fields(upsert_fields)
+      @upsert_fields = upsert_fields
       @data = build_data(data)
     end
 
@@ -14,11 +15,11 @@ module StitchData
     end
 
     def upsert!
-      RestClient.post(upsert_url, @data.to_json, @request_params)
+      RestClient.post( "#{API_BASE_URL}/push", @data.to_json, @request_params)
     end
 
     def validate!
-      RestClient.post(validate_url, @data.to_json, @request_params)
+      RestClient.post("#{API_BASE_URL}/validate", @data.to_json, @request_params)
     end
 
     private
@@ -33,14 +34,6 @@ module StitchData
           data: record
         }
       end
-    end
-
-    def upsert_url
-      "#{API_BASE_URL}/push"
-    end
-
-    def validate_url
-      "#{API_BASE_URL}/validate"
     end
 
     def validate_required_upsert_fields(upsert_fields)
