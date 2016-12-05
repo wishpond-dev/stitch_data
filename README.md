@@ -18,81 +18,32 @@ You need a valid token  of token and
 You can use an initializer for example if you're on Rails.
 ```rb
 # initializers/noun_project_api.rb
-NounProjectApi.configure do |config|
-  # Will only show public domain icons when running in dev/test envs
-  config.public_domain = ['development', 'test'].include?(ENV['RAILS_ENV'])
+StitchData.configure do |config|
+  config.token = {your api token}
+  config.client_id = { your client id }
 end
 ```
-
-### Find single icon
-Initialize
+### Usage
+We reccomend to check the StitchData import api first.
+https://docs.stitchdata.com/hc/en-us/articles/223734167-Import-API-Methods
+Each request to Stitch must include the following keys
 ```rb
-icon_finder = NounProjectApi::IconRetriever.new(token, secret)
+stitch_upsert_keys = { sequence: :created_at, table_name: :some_table_name, key_names: [:id] }
+```
+Send data to stitch like the following
+```rb
+StitchData::Api.new(stitch_upsert_keys, data).upsert!
 ```
 
-Find an Icon by id [source](https://api.thenounproject.com/documentation.html#get--icon-(int-id))
+###Integration Testing
+Use the validate! method in order to check if Stitch accepts the data your data.
 ```rb
-result = icon_finder.find(1) # Returns a hash of the parsed JSON result.
-```
-
-Find an Icon by slug [source](https://api.thenounproject.com/documentation.html#get--icon-(string-term))
-```rb
-result = icon_finder.find_by_slug('globe') # Returns a hash of the parsed JSON result.
-```
-
-### Search icons
-Initialize
-```rb
-icons_finder = NounProjectApi::IconsRetriever.new(token, secret)
-```
-
-*Optional arguments for both methods are limit, offset and page*
-
-Find Icons [source](https://api.thenounproject.com/documentation.html#get--icons-(string-term))
-```rb
-result = icons_finder.find('cat') # Returns an array of the parsed JSON results.
-```
-
-Get recent Icons [source](https://api.thenounproject.com/documentation.html#get--icons-recent_uploads)
-```rb
-result = icons_finder.recent_uploads # Returns an array of the parsed JSON results.
-```
-
-### Find a collection of icons
-Initialize
-```rb
-collection_finder = NounProjectApi::CollectionRetriever.new(token, secret)
-```
-
-Find a Collection by id [source](http://api.thenounproject.com/documentation.html#get--collection-(int-id))
-```rb
-result = collection_finder.find(1) # Returns a hash of the parsed JSON result.
-```
-
-Find a Collection by slug [source](http://api.thenounproject.com/documentation.html#get--collection-(slug))
-```rb
-result = collection_finder_finder.find_by_slug('national-park-service') # Returns a hash of the parsed JSON result.
-```
-
-
-#### Resulting objects
-The resulting object is either a NounObjectApi::Icon or an array of ones.
-
-```rb
-result.class # NounProjectApi::Icon
-result.id # 1
-result.public_domain? # true/false
-result.svg_url # url/nil
-result.preview_url # 200 size preview url
-result.preview_url(42) # 42 size preview url
-
-# You can always access the original Hash at
-result.original_hash
+StitchData::Api.new(stitch_upsert_keys, data).validate!
 ```
 
 ## Disclaimer
 
-This is completely unofficial and is not related to The Noun Project in any way.
+This is completely unofficial and is not related to StitchData company in any way.
 
 ## Contributing
 
