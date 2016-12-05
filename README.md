@@ -11,13 +11,12 @@ In case you need to integrate a data source which is not supported by Stitch you
 - Create an import API integration in the Stitch Console and generate your API token.
 
 ### include the gem
-```rb
 Rails
+```rb
 gem "stitch_data", "~> 1.0.0"
 ```
-
-```rb
 Sinatra
+```rb
 gem install "stitch_data", "~> 1.0.0"
 require 'stitch_data'
 ```
