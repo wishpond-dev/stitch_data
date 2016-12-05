@@ -2,18 +2,25 @@ A Ruby Wraper for Stitch Data API
 ===================
 
 
-Stitch Data is an ETL service built for developers, it has many built in third party integration.
-In case you need to integrate a data source which is not supported by Stitch you can use their data replication engine
-in order to do that.
-
-```rb
-gem "stitch_data", "~> 1.0.0"
-```
+Stitch Data is an ETL service built for developers, it supports many built in third party integrations.
+In case you need to integrate a data source which is not supported by Stitch you can use the API that utilizes their data replication engine.
 
 ### Prerequisite
 - Create StitchData Account <br/>
 - Connect your account to your favorite data stores ( Redshift, BigQuery, PostgreSQL ) <br/>
 - Create an import API integration in the Stitch Console and generate your API token.
+
+### include the gem
+```rb
+Rails
+gem "stitch_data", "~> 1.0.0"
+```
+
+```rb
+Sinatra
+gem install "stitch_data", "~> 1.0.0"
+require 'stitch_data'
+```
 
 ### Configuration
 You can use an initializer for example if you're on Rails.
