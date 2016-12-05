@@ -10,7 +10,7 @@ gem "stitch_data", "~> 1.0.0"
 
 ## Usage
 
-You need a valid pair of token and secret to use the Gem, you can get these by signing up [here](https://thenounproject.com/developers)
+You need a valid token  of token and
 
 *Raises ArgumentError on bad arguments*
 
