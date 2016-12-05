@@ -2,7 +2,7 @@ module StitchData
   class Api
     attr_accessor :upsert_fields, :data
     API_BASE_URL = "https://api.stitchdata.com/v2/import".freeze
-
+    DEFAULT_API_ACTION = "upsert".freeze
     def initialize(upsert_fields, data)
       validate_required_upsert_fields(upsert_fields)
       @request_params = { Authorization: "Bearer #{StitchData.configuration.token}", content_type: 'application/json', accept: 'json' }
@@ -29,7 +29,7 @@ module StitchData
           client_id: StitchData.configuration.client_id,
           table_name: upsert_fields[:table_name].to_s,
           sequence: record[upsert_fields[:sequence]].to_i,
-          action: "upsert",
+          action: DEFAULT_API_ACTION,
           key_names: upsert_fields[:key_names].map(&:to_s),
           data: record
         }
