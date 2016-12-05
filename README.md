@@ -25,7 +25,7 @@ StitchData.configure do |config|
 end
 ```
 ### Usage
-We reccomend to check the StitchData import api first. <br/>
+We reccomend to read the Stitch import api documetation in ordre to understand how to utilize the upsert method for your data replication needs. <br/>
 https://docs.stitchdata.com/hc/en-us/articles/223734167-Import-API-Methods
 Each request to Stitch must include the following keys
 ```rb
