@@ -1,7 +1,7 @@
 require 'json'
 require 'rest-client'
 require 'stitch_data/api'
-
+require 'stitch_data/errors'
 module StitchData
   def self.configuration
     @configuration ||=  Configuration.new
