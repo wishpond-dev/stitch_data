@@ -7,7 +7,7 @@ In case you need to integrate a data source which is not supported by Stitch you
 
 ### Prerequisite
 - Create StitchData Account <br/>
-- Connect your account to your favorite data stores ( Redshift, BigQuery, PostgreSQL ) <br/>
+- Connect the account to your favorite data stores ( Redshift, BigQuery, PostgreSQL ) <br/>
 - Create an import API integration in the Stitch Console and generate your API token.
 
 ### include the gem
@@ -32,8 +32,8 @@ end
 ```
 ### Usage
 We reccomend to read the Stitch import api documetation in ordre to understand how to utilize the upsert method for your data replication needs. <br/>
-https://docs.stitchdata.com/hc/en-us/articles/223734167-Import-API-Methods
-Each request to Stitch must include the following keys
+https://docs.stitchdata.com/hc/en-us/articles/223734167-Import-API-Methods <br/>
+Each upsert request to Stitch must include the following keys
 ```rb
 stitch_upsert_keys = { sequence: :created_at, table_name: :some_table_name, key_names: [:id] }
 ```
