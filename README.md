@@ -2,97 +2,56 @@ A Ruby Wraper for Stitch Data API
 ===================
 
 
+Stitch Data is an ETL service built for developers, it supports many built in third party integrations.
+In case you need to integrate a data source which is not supported by Stitch you can use the API that utilizes their data replication engine.
 
+### Prerequisite
+- Create Stitch Data Account <br/>
+- Connect the account to your favorite data stores ( Redshift, BigQuery, PostgreSQL ) <br/>
+- Create an import API integration in the Stitch Console and generate your API token.
 
+### include the gem
+Rails
 ```rb
 gem "stitch_data", "~> 1.0.0"
 ```
-
-## Usage
-
-You need a valid pair of token and secret to use the Gem, you can get these by signing up [here](https://thenounproject.com/developers)
-
-*Raises ArgumentError on bad arguments*
+Sinatra
+```rb
+gem install "stitch_data", "~> 1.0.0"
+require 'stitch_data'
+```
 
 ### Configuration
 You can use an initializer for example if you're on Rails.
 ```rb
-# initializers/noun_project_api.rb
-NounProjectApi.configure do |config|
-  # Will only show public domain icons when running in dev/test envs
-  config.public_domain = ['development', 'test'].include?(ENV['RAILS_ENV'])
+# initializers/stitch_data_api.rb
+StitchData.configure do |config|
+  config.token = "your-api-token"
+  config.client_id = "your-client-id"
 end
 ```
-
-### Find single icon
-Initialize
+### Usage
+We reccomend to read the [Stitch import api documetation](https://docs.stitchdata.com/hc/en-us/articles/223734167-Import-API-Methods ) in order to understand how to utilize the upsert method for your data replication needs. <br/>
+<br/>
+Each upsert request to Stitch must include the following keys
+table_name -> name of the destination table <br/>
+sequence -> record sequence number (Integer/Timestamp) <br/>
+key_names -> table primary keys (Array)
+<br/>
+Send data to stitch like the following
 ```rb
-icon_finder = NounProjectApi::IconRetriever.new(token, secret)
+StitchData::Api.new(table_name, sequence, key_names, data).upsert!
 ```
 
-Find an Icon by id [source](https://api.thenounproject.com/documentation.html#get--icon-(int-id))
+###Integration Testing
+Use the validate! method in order to validate your upsert requests goes through
 ```rb
-result = icon_finder.find(1) # Returns a hash of the parsed JSON result.
-```
-
-Find an Icon by slug [source](https://api.thenounproject.com/documentation.html#get--icon-(string-term))
-```rb
-result = icon_finder.find_by_slug('globe') # Returns a hash of the parsed JSON result.
-```
-
-### Search icons
-Initialize
-```rb
-icons_finder = NounProjectApi::IconsRetriever.new(token, secret)
-```
-
-*Optional arguments for both methods are limit, offset and page*
-
-Find Icons [source](https://api.thenounproject.com/documentation.html#get--icons-(string-term))
-```rb
-result = icons_finder.find('cat') # Returns an array of the parsed JSON results.
-```
-
-Get recent Icons [source](https://api.thenounproject.com/documentation.html#get--icons-recent_uploads)
-```rb
-result = icons_finder.recent_uploads # Returns an array of the parsed JSON results.
-```
-
-### Find a collection of icons
-Initialize
-```rb
-collection_finder = NounProjectApi::CollectionRetriever.new(token, secret)
-```
-
-Find a Collection by id [source](http://api.thenounproject.com/documentation.html#get--collection-(int-id))
-```rb
-result = collection_finder.find(1) # Returns a hash of the parsed JSON result.
-```
-
-Find a Collection by slug [source](http://api.thenounproject.com/documentation.html#get--collection-(slug))
-```rb
-result = collection_finder_finder.find_by_slug('national-park-service') # Returns a hash of the parsed JSON result.
-```
-
-
-#### Resulting objects
-The resulting object is either a NounObjectApi::Icon or an array of ones.
-
-```rb
-result.class # NounProjectApi::Icon
-result.id # 1
-result.public_domain? # true/false
-result.svg_url # url/nil
-result.preview_url # 200 size preview url
-result.preview_url(42) # 42 size preview url
-
-# You can always access the original Hash at
-result.original_hash
+StitchData::Api.new(table_name, sequence, key_names, data).validate!
 ```
 
 ## Disclaimer
 
-This is completely unofficial and is not related to The Noun Project in any way.
+This is completely unofficial and is not related to Stitch Data company in any way.
 
 ## Contributing
 
