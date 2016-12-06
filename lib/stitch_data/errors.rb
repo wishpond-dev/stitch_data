@@ -1,6 +1,6 @@
 module StitchData
   module Errors
-    class WrongOrMissingUpsertFields < StandardError
+    class WrongUpsertFields < StandardError
     end
   end
 end
