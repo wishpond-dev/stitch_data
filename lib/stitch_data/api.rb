@@ -1,12 +1,16 @@
 module StitchData
   class Api
-    attr_accessor :upsert_fields, :data
+    attr_accessor :table_name, :sequence, :key_names, :data
     API_BASE_URL = "https://api.stitchdata.com/v2/import".freeze
     DEFAULT_API_ACTION = "upsert".freeze
-    def initialize(upsert_fields, data)
-      validate_required_upsert_fields(upsert_fields)
-      @request_params = { Authorization: "Bearer #{StitchData.configuration.token}", content_type: 'application/json', accept: 'json' }
-      @upsert_fields = upsert_fields
+    DEFAULT_REQUEST_PARAMS = {content_type: 'application/json', accept: 'json'}.freeze
+
+    def initialize(table_name, sequence, key_names, data)
+      validate_required_upsert_fields(sequence, key_names)
+      @request_params = { Authorization: "Bearer #{StitchData.configuration.token}" }.merge(DEFAULT_REQUEST_PARAMS)
+      @table_name = table_name.to_s
+      @sequence = sequence.to_sym
+      @key_names = key_names.map(&:to_s)
       @data = build_records(data)
     end
 
@@ -15,32 +19,36 @@ module StitchData
     end
 
     def upsert!
-      RestClient.post( "#{API_BASE_URL}/push", @data.to_json, @request_params)
+      stitch_post_request("#{API_BASE_URL}/push")
     end
 
     def validate!
-      RestClient.post("#{API_BASE_URL}/validate", @data.to_json, @request_params)
+      stitch_post_request("#{API_BASE_URL}/validate")
     end
 
     private
+
     def build_records(records)
       records.map do |record|
         {
           client_id: StitchData.configuration.client_id,
-          table_name: upsert_fields[:table_name].to_s,
-          sequence: record[upsert_fields[:sequence]].to_i,
+          table_name: table_name,
+          sequence: record[sequence].to_i,
           action: DEFAULT_API_ACTION,
-          key_names: upsert_fields[:key_names].map(&:to_s),
+          key_names: key_names,
           data: record
         }
       end
     end
 
-    def validate_required_upsert_fields(upsert_fields)
-      raise StitchData::Errors::WrongOrMissingUpsertFields, "Missing required upsert fields" if upsert_fields.keys.sort != [:sequence , :table_name , :key_names].sort
-      raise StitchData::Errors::WrongOrMissingUpsertFields, "upsert field key_name should be of type Array" if upsert_fields[:key_names].class.name != "Array"
-      upsert_fields
+    def validate_required_upsert_fields(sequence, key_names)
+      raise StitchData::Errors::WrongUpsertFields, "key_names field must be an Array" unless key_names.is_a?(Array)
     end
 
+    def stitch_post_request(url)
+      JSON.parse(RestClient.post(url, @data.to_json, @request_params))
+    rescue => e
+      { "status" => e.message, "message" => JSON.parse(e.response)["errors"] }
+    end
   end
 end
