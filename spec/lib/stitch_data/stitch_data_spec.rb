@@ -6,7 +6,7 @@ RSpec.describe 'StitchData' do
     mocked_time = Time.new
     @first_record = { id: '1234', event_name: 'logged_in', created_at: mocked_time }
     @second_record = { id: '12345', event_name: 'logged_out', created_at: mocked_time }
-    @data = [ @first_record, @second_record ]
+    @data = [@first_record, @second_record]
     @sequence = :created_at
     @table_name = 'events'
     @key_names = [:id]
@@ -15,7 +15,8 @@ RSpec.describe 'StitchData' do
   describe :initalize do
 
     it 'should validate upsert field key_name is of Array data type' do
-       expect { StitchData::Api.new(@table_name, @sequence, :id, @data) }.to raise_error(StitchData::Errors::WrongUpsertFields)
+       expect { StitchData::Api.new(@table_name, @sequence, :id, @data) }
+       .to raise_error(StitchData::Errors::WrongUpsertFields)
     end
 
     it 'should build valid data structue' do
@@ -45,22 +46,24 @@ RSpec.describe 'StitchData' do
   describe :stitch_post_request do
     context :succesful_request do
       before :each do
-        stub_request(:post, "https://api.stitchdata.com/v2/import/validate").to_return(status: 200, body: {status: "OK", message: "Valid"}.to_json)
+        stub_request(:post, "https://api.stitchdata.com/v2/import/validate")
+        .to_return(status: 200, body: { status: "OK", message: "Valid" }.to_json)
       end
 
       it 'should return a hash with status and message' do
-        expect(StitchData::Api.new(@table_name,@sequence, @key_names, @data).validate!).to eq({ "status" => "OK",
-                                                                                                "message" => "Valid"
-                                                                                              })
+        expect(StitchData::Api.new(@table_name, @sequence, @key_names, @data).validate!)
+        .to eq({ "status" => "OK", "message" => "Valid" })
       end
     end
     context :failed_request do
       before :each do
-        stub_request(:post, "https://api.stitchdata.com/v2/import/validate").to_return(status: 403, body: '{"status":"ERROR","errors":"An array of records is expected"}')
+        stub_request(:post, "https://api.stitchdata.com/v2/import/validate")
+        .to_return(status: 403, body: '{ "status":"ERROR","errors":"An array of records is expected" }')
       end
 
       it 'should return hash with status and message' do
-        expect(StitchData::Api.new(@table_name,@sequence, @key_names, @data).validate!).to eq({"status"=>"403 Forbidden", "message"=>"An array of records is expected"})
+        expect(StitchData::Api.new(@table_name, @sequence, @key_names, @data).validate!)
+        .to eq({ "status"=>"403 Forbidden", "message"=>"An array of records is expected" })
       end
 
     end
