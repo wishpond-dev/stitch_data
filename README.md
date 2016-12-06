@@ -47,7 +47,7 @@ StitchData::Api.new(table_name, sequence, key_names, data).upsert!
 ###Integration Testing
 Use the validate! method in order to validate your upsert requests goes through
 ```rb
-StitchData::Api.new(stitch_upsert_keys, data).validate!
+StitchData::Api.new(table_name, sequence, key_names, data).validate!
 ```
 
 ## Disclaimer
