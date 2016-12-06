@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = 'stitch_data'
   s.version     = StitchData::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.date        = Time.new('2016','12','06')
+  s.date        = Time.new('2016', '12', '06')
   s.summary     = "Ruby wraper for the Stitch Data Api"
   s.description = "Wraper for the upsert method used for import data into stitch"
   s.authors     = ['Omri Shuva']

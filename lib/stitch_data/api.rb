@@ -1,9 +1,9 @@
 module StitchData
   class Api
     attr_accessor :table_name, :sequence, :key_names, :data
-    API_BASE_URL = "https://api.stitchdata.com/v2/import".freeze
+    API_BASE_URL = 'https://api.stitchdata.com/v2/import'.freeze
     DEFAULT_API_ACTION = "upsert".freeze
-    DEFAULT_REQUEST_PARAMS = {content_type: 'application/json', accept: 'json'}.freeze
+    DEFAULT_REQUEST_PARAMS = { content_type: 'application/json', accept: 'json' }.freeze
 
     def initialize(table_name, sequence, key_names, data)
       validate_key_names_is_array(key_names)
@@ -38,13 +38,13 @@ module StitchData
     end
 
     def validate_key_names_is_array(key_names)
-      raise StitchData::Errors::WrongUpsertFields, "key_names field must be an Array" unless key_names.is_a?(Array)
+      raise StitchData::Errors::WrongUpsertFields, 'key_names field must be an Array' unless key_names.is_a?(Array)
     end
 
     def stitch_post_request(url)
       JSON.parse(RestClient.post(url, @data.to_json, @request_params))
     rescue RestClient::ExceptionWithResponse => e
-      { "status" => e.message, "message" => JSON.parse(e.response)["errors"] }
+      { 'status' => e.message, 'message' => JSON.parse(e.response)['errors'] }
     end
   end
 end

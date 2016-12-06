@@ -48,7 +48,7 @@ RSpec.describe 'StitchData' do
         stub_request(:post, "https://api.stitchdata.com/v2/import/validate").to_return(status: 200, body: {status: "OK", message: "Valid"}.to_json)
       end
 
-      it 'should return a symbolized hash with status and message' do
+      it 'should return a hash with status and message' do
         expect(StitchData::Api.new(@table_name,@sequence, @key_names, @data).validate!).to eq({ "status" => "OK",
                                                                                                 "message" => "Valid"
                                                                                               })
@@ -59,7 +59,7 @@ RSpec.describe 'StitchData' do
         stub_request(:post, "https://api.stitchdata.com/v2/import/validate").to_return(status: 403, body: '{"status":"ERROR","errors":"An array of records is expected"}')
       end
 
-      it 'should return symbolized hash with status and message' do
+      it 'should return hash with status and message' do
         expect(StitchData::Api.new(@table_name,@sequence, @key_names, @data).validate!).to eq({"status"=>"403 Forbidden", "message"=>"An array of records is expected"})
       end
 
