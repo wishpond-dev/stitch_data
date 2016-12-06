@@ -62,4 +62,4 @@ This is completely unofficial and is not related to Stitch Data company in any w
 5. Create new Pull Request
 
 ## About Tailor Brands
-[Check us out!](https://goo.gl/h26ZwU)
+[Check us out!](https://www.tailorbrands.com)
