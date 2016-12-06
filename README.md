@@ -14,11 +14,11 @@ In case you need to integrate a data source which is not supported by Stitch you
 ### include the gem
 Rails
 ```rb
-gem "stitch_data", "~> 1.0.0"
+gem "stitch_data", "~> 0.1.0"
 ```
 Sinatra
 ```rb
-gem install "stitch_data", "~> 1.0.0"
+gem install "stitch_data", "~> 0.1.0"
 require 'stitch_data'
 ```
 
