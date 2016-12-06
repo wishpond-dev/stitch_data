@@ -6,7 +6,7 @@ module StitchData
     DEFAULT_REQUEST_PARAMS = {content_type: 'application/json', accept: 'json'}.freeze
 
     def initialize(table_name, sequence, key_names, data)
-      validate_required_upsert_fields(sequence, key_names)
+      validate_key_names_is_array(key_names)
       @request_params = { Authorization: "Bearer #{StitchData.configuration.token}" }.merge(DEFAULT_REQUEST_PARAMS)
       @table_name = table_name.to_s
       @sequence = sequence.to_sym
@@ -41,13 +41,13 @@ module StitchData
       end
     end
 
-    def validate_required_upsert_fields(sequence, key_names)
+    def validate_key_names_is_array(key_names)
       raise StitchData::Errors::WrongUpsertFields, "key_names field must be an Array" unless key_names.is_a?(Array)
     end
 
     def stitch_post_request(url)
       JSON.parse(RestClient.post(url, @data.to_json, @request_params))
-    rescue => e
+    rescue RestClient::ExceptionWithResponse => e
       { "status" => e.message, "message" => JSON.parse(e.response)["errors"] }
     end
   end
