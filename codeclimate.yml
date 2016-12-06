@@ -1,18 +1,24 @@
 ---
 engines:
+  brakeman:
+    enabled: true
+    exclude_fingerprints:
+    - 637751c6fb79f8239b4a1f1d12b84aabad2e2033a1306f48739e2453e1334137
   bundler-audit:
     enabled: true
   duplication:
-    enabled: true
+    enabled: false
     config:
       languages:
       - ruby
   fixme:
     enabled: true
-  rubocop:
-    enabled: true
 ratings:
   paths:
+  - Gemfile.lock
   - "**.rb"
 exclude_paths:
-- spec/
+- spec/**/*
+- scripts/**/*
+- coverage/**/*
+- "**/vendor/**/*"
