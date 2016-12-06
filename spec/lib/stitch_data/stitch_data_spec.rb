@@ -18,10 +18,6 @@ RSpec.describe 'StitchData' do
        expect { StitchData::Api.new(@table_name, @sequence, :id, @data) }.to raise_error(StitchData::Errors::WrongUpsertFields)
     end
 
-    it 'should validate upsert field sequence is a Fixnum' do
-       expect { StitchData::Api.new(@table_name, "2", :id, @data) }.to raise_error(StitchData::Errors::WrongUpsertFields)
-    end
-
     it 'should build valid data structue' do
       stitch_data = StitchData::Api.new(@table_name,@sequence, @key_names, @data)
       expect(stitch_data.data).to eq(
