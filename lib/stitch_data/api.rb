@@ -14,10 +14,6 @@ module StitchData
       @data = build_records(data)
     end
 
-    def self.check_endpoint_status
-      JSON.parse(RestClient.get("#{API_BASE_URL}/status"))["status"]
-    end
-
     def upsert!
       stitch_post_request("#{API_BASE_URL}/push")
     end
