@@ -25,17 +25,17 @@ RSpec.describe 'StitchData' do
                                       [
                                         {
                                           client_id: StitchData.configuration.client_id,
-                                          table_name: @table_name.to_s,
+                                          table_name: @table_name,
                                           sequence:  @first_record[@sequence].to_i,
-                                          action: 'upsert',
+                                          action: StitchData::Api::DEFAULT_API_ACTION,
                                           key_names:  @key_names.map(&:to_s),
                                           data: @first_record
                                         },
                                         {
                                           client_id: StitchData.configuration.client_id,
-                                          table_name: @table_name.to_s,
+                                          table_name: @table_name,
                                           sequence: @second_record[@sequence].to_i,
-                                          action: 'upsert',
+                                          action: StitchData::Api::DEFAULT_API_ACTION,
                                           key_names: @key_names.map(&:to_s),
                                           data: @second_record
                                         }
