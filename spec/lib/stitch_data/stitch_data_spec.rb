@@ -15,12 +15,12 @@ RSpec.describe 'StitchData' do
   describe :initalize do
 
     it 'should validate upsert field key_name is of Array data type' do
-       expect { StitchData::Api.new(@table_name, @sequence, :id, @data) }
-       .to raise_error(StitchData::Errors::WrongUpsertFields)
+      expect { StitchData::Api.new(@table_name, @sequence, :id, @data) }
+      .to raise_error(StitchData::Errors::WrongUpsertFields)
     end
 
     it 'should build valid data structue' do
-      stitch_data = StitchData::Api.new(@table_name,@sequence, @key_names, @data)
+      stitch_data = StitchData::Api.new(@table_name, @sequence, @key_names, @data)
       expect(stitch_data.data).to eq(
                                       [
                                         {
@@ -52,7 +52,7 @@ RSpec.describe 'StitchData' do
 
       it 'should return a hash with status and message' do
         expect(StitchData::Api.new(@table_name, @sequence, @key_names, @data).validate!)
-        .to eq({ "status" => "OK", "message" => "Valid" })
+        .to eq("status" => "OK", "message" => "Valid")
       end
     end
     context :failed_request do
@@ -63,7 +63,7 @@ RSpec.describe 'StitchData' do
 
       it 'should return hash with status and message' do
         expect(StitchData::Api.new(@table_name, @sequence, @key_names, @data).validate!)
-        .to eq({ "status"=>"403 Forbidden", "message"=>"An array of records is expected" })
+        .to eq("status" => "403 Forbidden", "message" => "An array of records is expected")
       end
 
     end
