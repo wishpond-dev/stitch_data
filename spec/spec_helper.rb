@@ -5,6 +5,7 @@
 require "bundler/setup"
 require "pry"
 require 'json'
+require 'webmock/rspec'
 require './lib/stitch_data/api'
 require './lib/stitch_data'
 
@@ -13,7 +14,6 @@ RSpec.configure do |config|
   config.formatter = "documentation"
   config.color = true
 end
-
 
 require 'simplecov'
 
