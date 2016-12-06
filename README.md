@@ -1,6 +1,6 @@
 A Ruby Wraper for Stitch Data API
 ===================
-
+(https://codeclimate.com/repos/584577393f11b34826000001/badges/aebfc4d9aa9cf0b17c72/gpa.svg)](https://codeclimate.com/repos/584577393f11b34826000001/feed)
 
 
 
