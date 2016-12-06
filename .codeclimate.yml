@@ -3,6 +3,11 @@ engines:
   bundler-audit:
     enabled: true
   duplication:
+    exclude_fingerprints:
+    - 0dee46d1021fcf41545ee137facd3d3b
+    - 0dee46d1021fcf41545ee137facd3d3b
+    - 5c3f3d96445f15e7908943afde3b8659
+    - 5c3f3d96445f15e7908943afde3b8659
     enabled: true
     config:
       languages:
@@ -11,6 +16,9 @@ engines:
     enabled: true
   rubocop:
     enabled: true
+    exclude_fingerprints:
+    - db01afcff4d73edcb259a9b0b4435e0a
+    - afda3705eab4f38ccbbf2ad17eb4519e
 ratings:
   paths:
   - Gemfile.lock
