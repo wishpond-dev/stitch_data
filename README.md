@@ -34,7 +34,7 @@ end
 ### Usage
 We reccomend to read the [Stitch import api documetation](https://docs.stitchdata.com/hc/en-us/articles/223734167-Import-API-Methods ) in order to understand how to utilize the upsert method for your data replication needs. <br/>
 <br/>
-Each upsert request to Stitch must include the following keys
+Each upsert request to Stitch must include the following keys<br/>
 table_name -> name of the destination table <br/>
 sequence -> record sequence number (Integer/Timestamp) <br/>
 key_names -> table primary keys (Array)
