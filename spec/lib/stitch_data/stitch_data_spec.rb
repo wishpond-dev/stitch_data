@@ -1,62 +1,69 @@
 require 'rspec'
 require 'spec_helper'
+
 RSpec.describe 'StitchData' do
   before :each do
     mocked_time = Time.new
     @first_record = { id: '1234', event_name: 'logged_in', created_at: mocked_time }
     @second_record = { id: '12345', event_name: 'logged_out', created_at: mocked_time }
     @data = [ @first_record, @second_record ]
-    @upsert_fields = { sequence: :created_at, table_name: 'events', key_names: [:id] }
+    @sequence = :created_at
+    @table_name = 'events'
+    @key_names = [:id]
   end
 
   describe :initalize do
 
-    it 'should raise error unless required upsert fields where given' do
-      expect { StitchData::Api.new({},@data) }.to raise_error(StitchData::Errors::WrongOrMissingUpsertFields)
-    end
-
     it 'should validate upsert field key_name is of Array data type' do
-       @upsert_fields[:key_names] = :id
-       expect { StitchData::Api.new(@upsert_fields,@data) }.to raise_error(StitchData::Errors::WrongOrMissingUpsertFields)
+       expect { StitchData::Api.new(@table_name, @sequence, :id, @data) }.to raise_error(StitchData::Errors::WrongUpsertFields)
     end
 
     it 'should build valid data structue' do
-      stitch_data = StitchData::Api.new(@upsert_fields, @data)
+      stitch_data = StitchData::Api.new(@table_name,@sequence, @key_names, @data)
       expect(stitch_data.data).to eq(
                                       [
                                         {
                                           client_id: StitchData.configuration.client_id,
-                                          table_name: @upsert_fields[:table_name].to_s,
-                                          sequence:  @first_record[@upsert_fields[:sequence]].to_i,
+                                          table_name: @table_name.to_s,
+                                          sequence:  @first_record[@sequence].to_i,
                                           action: 'upsert',
-                                          key_names:  @upsert_fields[:key_names].map(&:to_s),
+                                          key_names:  @key_names.map(&:to_s),
                                           data: @first_record
                                         },
                                         {
                                           client_id: StitchData.configuration.client_id,
-                                          table_name: @upsert_fields[:table_name].to_s,
-                                          sequence: @second_record[@upsert_fields[:sequence]].to_i,
+                                          table_name: @table_name.to_s,
+                                          sequence: @second_record[@sequence].to_i,
                                           action: 'upsert',
-                                          key_names: @upsert_fields[:key_names].map(&:to_s),
+                                          key_names: @key_names.map(&:to_s),
                                           data: @second_record
                                         }
                                       ]
                                     )
     end
   end
+  describe :stitch_post_request do
+    context :succesful_request do
+      before :each do
+        stub_request(:post, "https://api.stitchdata.com/v2/import/validate").to_return(status: 200, body: {status: "OK", message: "Valid"}.to_json)
+      end
 
-  # context :api_methods do
+      it 'should return a symbolized hash with status and message' do
+        expect(StitchData::Api.new(@table_name,@sequence, @key_names, @data).validate!).to eq({ "status" => "OK",
+                                                                                                "message" => "Valid"
+                                                                                              })
+      end
+    end
+    context :failed_request do
+      before :each do
+        stub_request(:post, "https://api.stitchdata.com/v2/import/validate").to_return(status: 403, body: '{"status":"ERROR","errors":"An array of records is expected"}', :headers => {})
+      end
 
-  #   before :each do
-  #     @shared_example_data = { upsert_fields: @upsert_fields, data: @data, method: 'validate!' }
-  #   end
+      it 'should return symbolized hash with status and message' do
+        expect(StitchData::Api.new(@table_name,@sequence, @key_names, @data).validate!).to eq({"status"=>"403 Forbidden", "message"=>"An array of records is expected"})
+      end
 
-  #   describe :upsert! do
-  #     it_behaves_like('endpoint_validation', @shared_example_data)
-  #   end
+    end
 
-  #   describe :validate! do
-  #     it_behaves_like('endpoint_validation', @shared_example_data)
-  #   end
-  # end
+  end
 end
