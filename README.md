@@ -34,12 +34,14 @@ end
 We reccomend to read the [Stitch import api documetation](https://docs.stitchdata.com/hc/en-us/articles/223734167-Import-API-Methods ) in order to understand how to utilize the upsert method for your data replication needs. <br/>
 <br/>
 Each upsert request to Stitch must include the following keys
-```rb
+table_name -> name of the destination table <br/>
+sequence -> record sequence number (Integer/Timestamp) <br/>
+key_names -> table primary keys (Array)
 stitch_upsert_keys = { sequence: :created_at, table_name: :some_table_name, key_names: [:id] }
 ```
 Send data to stitch like the following
 ```rb
-StitchData::Api.new(stitch_upsert_keys, data).upsert!
+StitchData::Api.new(table_name, sequence, key_names, data).upsert!
 ```
 
 ###Integration Testing
