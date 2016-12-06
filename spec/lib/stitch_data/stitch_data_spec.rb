@@ -56,7 +56,7 @@ RSpec.describe 'StitchData' do
     end
     context :failed_request do
       before :each do
-        stub_request(:post, "https://api.stitchdata.com/v2/import/validate").to_return(status: 403, body: '{"status":"ERROR","errors":"An array of records is expected"}', :headers => {})
+        stub_request(:post, "https://api.stitchdata.com/v2/import/validate").to_return(status: 403, body: '{"status":"ERROR","errors":"An array of records is expected"}')
       end
 
       it 'should return symbolized hash with status and message' do
