@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files       = Dir['README.rdoc', 'VERSION', 'MIT-LICENSE', 'Rakefile', 'lib/**/*']
   s.test_files  = Dir['spec/**/*']
 
-  s.add_development_dependency 'rake', '~> 0'
+  s.add_development_dependency 'rake', '~> 13'
   s.add_development_dependency 'rspec', '~> 3.1', '>= 3.1.0'
   s.add_development_dependency 'webmock'
   s.add_development_dependency 'pry', '~> 0'
