@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     stitch_data (0.1.0)
-      json (~> 1.8.0)
+      json (>= 1.8, < 2.6)
       rest-client (~> 2.0.0)
 
 GEM
@@ -17,18 +17,18 @@ GEM
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    domain_name (0.5.20170404)
+    domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     ffi (1.9.14-java)
     hashdiff (0.3.1)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    json (1.8.6)
-    json (1.8.6-java)
+    json (2.5.1)
+    json (2.5.1-java)
     method_source (0.8.2)
-    mime-types (3.1)
+    mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2016.0521)
+    mime-types-data (3.2021.0225)
     multi_json (1.12.1)
     netrc (0.11.0)
     pry (0.10.4)
@@ -71,7 +71,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf (0.1.4-java)
-    unf_ext (0.0.7.4)
+    unf_ext (0.0.7.7)
     webmock (2.3.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
